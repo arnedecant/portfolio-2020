@@ -1,0 +1,13 @@
+{
+	"production": false,
+	"targets": [
+		{
+			"id": "index",
+			"seo-title": "Arne Decant",
+			"seo-description": "",
+			"src-html": "index.html",
+			"src-sass": "main.scss",
+			"src-js": "app.js"
+		}
+	]
+}
