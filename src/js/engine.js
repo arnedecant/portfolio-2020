@@ -2,7 +2,7 @@
 // :: Engine
 // -------------------------------------------------------------------
 
-import * as THREE from 'three'
+// import * as THREE from 'three'
 
 export default class Engine {
 
@@ -29,7 +29,7 @@ export default class Engine {
 
 		// add events
 
-		window.addEventListener('resize', this.resize.bind(this), false)
+		// window.addEventListener('resize', this.resize.bind(this), false)
 		window.addEventListener('click', this.click.bind(this), false)
 		window.addEventListener('mousemove', this.mousemove.bind(this), false)
 		window.addEventListener('mousedown', this.mousedown.bind(this), false)
@@ -93,7 +93,7 @@ export default class Engine {
 		// set values to init the camera
 
 		this.aspectRatio = this.width / this.height
-		this.fieldOfView = 45
+		this.fieldOfView = 40
 		this.nearPlane = 0.1
 		this.farPlane = 10000
 
@@ -106,12 +106,11 @@ export default class Engine {
 			this.farPlane
 		)
 
-		const z = Math.min(window.innerWidth, window.innerHeight);
-		this.camera.position.set(0, 0, 700);
+		this.camera.position.set(0, 20 * 1, 35 * 1)
 
 		// point the camera to the center
 
-		this.camera.lookAt(new THREE.Vector3(0,0,0))
+		this.camera.lookAt(this.scene.position)
 
 	}
 
@@ -138,8 +137,8 @@ export default class Engine {
 
 		// append to DOM
 
-		this.container = document.querySelector('#world')
-		this.container.appendChild(this.renderer.domElement)
+		// this.container = document.querySelector('#world')
+		document.body.appendChild(this.renderer.domElement)
 
 	}
 
@@ -147,23 +146,29 @@ export default class Engine {
 
 		// create a new ambient light
 
-		this.light = new THREE.AmbientLight(0xffffff, 0.5)
+		this.ambientLight = new THREE.AmbientLight(0xffffff, 0.1)
 
 		// create a new shadow light
 
-		this.shadowLight = new THREE.DirectionalLight(0xffffff, 0.5)
-		this.shadowLight.position.set(200, 200, 200)
-		this.shadowLight.castShadow = true
+		// this.shadowLight = new THREE.DirectionalLight(0xffffff, 0.5)
+		// this.shadowLight.position.set(200, 200, 200)
+		// this.shadowLight.castShadow = true
 
 		// create a new back light
 
-		this.backLight = new THREE.DirectionalLight(0xffffff, 0.2)
-		this.backLight.position.set(-100, 200, 50)
-		this.backLight.castShadow = true
+		// this.backLight = new THREE.DirectionalLight(0xffffff, 0.2)
+		// this.backLight.position.set(-100, 200, 50)
+		// this.backLight.castShadow = true
+
+		// create a new spot light
+
+		this.spotLight = new THREE.SpotLight(0xffffff, 1, 80, Math.PI * 0.25, 1, 2)
+		this.spotLight.position.set(0, 40, 0)
 
 		// add lights to the scene
 
-		this.scene.add(this.light)
+		this.scene.add(this.ambientLight)
+		this.scene.add(this.spotLight)
 		// this.scene.add(this.shadowLight)
 		// this.scene.add(this.backLight)
 
@@ -297,7 +302,7 @@ export default class Engine {
 
 		// render
 
-		// this.render()
+		this.render()
 
 	}
 

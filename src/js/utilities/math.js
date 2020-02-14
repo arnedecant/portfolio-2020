@@ -2,14 +2,14 @@
 
 export const random = (v0, v1) => {
 
-	if (Array.isArray(min)) return min[Math.floor(Math.random() * min.length)]
+	if (Array.isArray(v0)) return v0[Math.floor(Math.random() * v0.length)]
 
-	if (!max) {
-		min = 0 - min
-		max = min
+	if (!v1) {
+		v0 = 0 - v0
+		v1 = v0
 	}
 
-	return Math.random() * (max - min) + min
+	return Math.random() * (v1 - v0) + v0
 
 }
 
@@ -38,6 +38,41 @@ export const lerp = (v0, v1, t) => {
 
 	return v0 * (1 - t) + v1 * t
 	
+}
+
+export const safeEval = (exp) => {
+
+	// if it's already an int, return the value
+
+	if (typeof exp !== 'string') return exp
+
+	// regular expression
+
+	var reg = /(?:[a-z$_][a-z0-9$_]*)|(?:[;={}\[\]"'!&<>^\\?:])/ig,
+	valid = true;
+
+	// detect valid JS identifier names and replace them
+
+	exp = exp.replace(reg, (prop) => {
+
+		// if the name is a direct member of Math, allow
+		// otherwise the expression is invalid
+
+		if (Math.hasOwnProperty(prop)) return 'Math.' + prop
+		else valid = false
+
+	})
+
+	// don't eval if our replace function flagged as invalid
+
+	if (!valid) alert('Invalid arithmetic expression')
+
+	try { 
+		return eval(exp)
+	} catch (e) { 
+		alert('Invalid arithmetic expression');
+	}
+
 }
 
 Array.prototype.random = () => random(this)

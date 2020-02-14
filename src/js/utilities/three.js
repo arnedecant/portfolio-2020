@@ -1,5 +1,8 @@
 'use strict'
 
+// import * as THREE from 'three'
+import { safeEval } from './math.js'
+
 export const shadow = (subject, opacity) => {
 	
 	let material = new THREE.ShadowMaterial({opacity: opacity})
@@ -10,5 +13,11 @@ export const shadow = (subject, opacity) => {
 	mesh.receiveShadow = true
 	
 	return mesh
+
+}
+
+export const hcfp = (percent) => {
+
+	return `#${new THREE.Color().setHSL(safeEval(percent), 0.5, 0.5).getHexString()}`
 
 }

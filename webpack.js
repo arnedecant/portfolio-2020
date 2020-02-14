@@ -5,6 +5,7 @@
 const config = require('./build-config.json')
 const path = require('path')
 
+const minimizer = []
 
 // --------------------------------------------------------------
 // :: PLUGINS
@@ -12,17 +13,7 @@ const path = require('path')
 // - https://www.npmjs.com/package/uglifyjs-webpack-plugin
 
 const uglify = require('uglifyjs-webpack-plugin')
-
-let plugins = []
-
-if(config.production){
-
-	plugins.push(new uglify({
-		parallel: true,
-		cache: true
-	}))
-
-}
+if (config.production) minimizer.push(new uglify({ parallel: true, cache: true }))
 
 
 // --------------------------------------------------------------
@@ -47,7 +38,11 @@ config.targets.forEach((target) => {
 module.exports = {
 
 	entry: targets,
-	plugins: plugins,
+	mode: config.production ? 'production' : 'none',
+
+	optimization: {
+		minimizer: minimizer
+	},
 
 	// Where to ouput the bundled js
 	// [name] will be replaced by the target['id']
