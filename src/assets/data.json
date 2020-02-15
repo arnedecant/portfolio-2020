@@ -8,19 +8,19 @@
             "material": {
                 "type": "MeshPhongMaterial",
                 "parameters": {
-                    "emissive": "1.5 / 3",
+                    "emissive": 0.46,
 				    "specular": "#efefef",
-				    "shininess": 20,
+				    "shininess": 10,
 				    "flatShading": true
                 }
             },
             "multiplier": 400,
 			"duration": 0.4,
 			"points": [
+                [[20, 10, 0], 10],
                 [[0, 10, 0], 10],
                 [[0, 0, 0], 10],
-                [[0, 0, 0], 10],
-                [[0, -10, 0], 10]
+                [[-20, -10, 20], 10]
 			]
         },
         {
@@ -31,19 +31,19 @@
             "material": {
                 "type": "MeshPhongMaterial",
                 "parameters": {
-                    "emissive": 0,
+                    "emissive": 0.45,
 				    "specular": "#efefef",
-				    "shininess": 20,
+				    "shininess": 10,
 				    "flatShading": true
                 }
             },
-            "multiplier": 200,
+            "multiplier": 400,
 			"duration": 0.4,
 			"points": [
-                [[0, 0, 0], 10],
-                [[0, 0, 0], 8],
-                [[0, 0, 0], 2],
-                [[0, 0, 0], 12]
+                [[-10, -10, 0], 10],
+                [[-25, 0, 10], 10],
+                [[25, 10, 10], 10],
+                [[10, 10, 0], 10]
 			]
         },
         {
@@ -54,19 +54,19 @@
             "material": {
                 "type": "MeshPhongMaterial",
                 "parameters": {
-                    "emissive": "0.5 / 3",
+                    "emissive": 0.45,
 				    "specular": "#efefef",
-				    "shininess": 20,
+				    "shininess": 10,
 				    "flatShading": true
                 }
             },
-            "multiplier": 200,
+            "multiplier": 400,
 			"duration": 0.4,
 			"points": [
-                [[-10, 0, 0], 4],
-                [[-2.5, -10, 0], 4],
-                [[2.5, 10, 0], 4],
-                [[10, 0, 0], 4]
+                [[0, 0, 0], 10],
+                [[0, 0, -30], 8],
+                [[0, 0, 30], 2],
+                [[0, 0, 0], 20]
 			]
         }
     ]
