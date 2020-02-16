@@ -11,23 +11,23 @@ class App {
 
 	constructor() {
 
-		// elements
+		// create new engine: setup scene, camera & lighting
+		// and load vertex and fragment shaders in memory
 
-		this.$sections = document.querySelectorAll('section:not(.hero)');
-		this.$hero = document.querySelector('section.hero');
-
-		// properties
-
-		this.shaders = {
+		window.ENGINE = new Engine()
+		window.SHADERS = {
 			vertex: document.querySelector('[data-shader="vertex"]').textContent,
 			fragment: document.querySelector('[data-shader="fragment"]').textContent
 		}
+
+		// elements
+
+		this.$sections = [...document.querySelectorAll('section:not(.hero)')]
+		this.$hero = document.querySelector('section.hero')
+
+		// properties
 		
 		this.instances = []
-
-		// create new engine: setup scene, camera & lighting
-
-		window.ENGINE = new Engine()
 
 		// events
 
@@ -40,16 +40,33 @@ class App {
 
 	}
 
-	async getData(path) {
+	async getData() {
+
 		const data = await fetch('assets/data.json')
 		return await data.json()
+
 	}
 
 	async init() {
 		
 		this.data = await this.getData()
 
+		this.createInstances();
+		this.scrollUpdates();
+
+		requestAnimationFrame(() => {
+			window.scrollTo(0, 0)
+			this.resize()
+			this.$hero.style.opacity = 1
+		})
+
+	}
+
+	createInstances() {
+
 		for (const instance of this.data.instances) {
+
+			const points = instance.points.map((point) => () => getArrayWithNoise(...point))
 
 			const props = {
 				...instance,
@@ -58,45 +75,49 @@ class App {
 					...instance.material.parameters,
 					emissive: hcfp(instance.material.parameters.emissive)
 				}),
-				points: [
-					() => getArrayWithNoise(...instance.points[0]),
-					() => getArrayWithNoise(...instance.points[1]),
-					() => getArrayWithNoise(...instance.points[2]),
-					() => getArrayWithNoise(...instance.points[3])
-				]
+				points: points
 			}
 			
 			this.instances.push(new Instance(props))
 
 		}
 
+	}
+
+	scrollUpdates() {
+
 		uos(0, 0.05, p => this.$hero.style.opacity = 1 - p);
 		uos(0, 1, p => this.render());
 
-		const step = 1 / this.instances.length;
+		const step = 1 / this.instances.length
+
 		for (let i = 0; i < this.instances.length; i += 1) {
-		const transitionBegin = i * step;
-		const transitionEnd = transitionBegin + step * 0.5;
-		const textEnd = (i + 1) * step;
-		uos(transitionBegin, transitionEnd, p => (this.instances[i].phenomenon.uniforms.time.value = p));
-		uos(transitionEnd, textEnd, p => {
-			let np = p * 2.0 - 1.0;
-			np = 1.0 - np * np;
-			this.$sections[i].style.opacity = i === this.instances.length - 1 ? p * 1.5 : np * 1.5;
-		});
+
+			const transitionBegin = i * step
+			const transitionEnd = transitionBegin + step * 0.5
+			const textEnd = (i + 1) * step
+			const $section = this.$sections[i]
+
+			uos(transitionBegin, transitionEnd, p => (this.instances[i].phenomenon.uniforms.time.value = p))
+
+			uos(transitionEnd, textEnd, p => {
+
+				let opacity = 0
+				let np = p * 2.0 - 1.0
+				np = 1.0 - np * np
+
+				if (i === this.instances.length - 1) opacity =  p * 1.5
+				else opacity = np * 1.5
+
+				$section.style.opacity = opacity
+
+				if (opacity > 0) {
+					this.$sections.forEach(($s) => ($s != $section) && $s.classList.remove('active'))
+					$section.classList.add('active')
+				}
+
+			})
 		}
-
-		requestAnimationFrame(() => {
-			window.scrollTo(0, 0);
-			this.resize();
-			this.$hero.style.opacity = 1;
-		});
-
-	}
-
-	eval(exp) {
-
-		
 
 	}
 
@@ -104,7 +125,11 @@ class App {
 
 		// Set section heights
 
-		for (const $section of this.$sections) $section.style.height = `${window.innerHeight}px`
+		for (const $section of this.$sections) {
+
+			$section.style.height = window.innerHeight + 'px'
+
+		}
 
 		// Resize engine
 
@@ -127,10 +152,6 @@ class App {
         // render ENGINE
 
 		ENGINE.render()
-		
-		// Do stuff
-
-		// TODO ...
 
 		// add self to the requestAnimationFrame
 

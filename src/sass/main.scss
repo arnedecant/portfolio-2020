@@ -7,130 +7,17 @@
 // Base
 
 @import "base/_normalize";
-// @import "base/_typography";
+@import "base/_typography";
 // @import "base/_animations";
 // @import "base/_images";
-// @import "base/_layout";
+@import "base/_layout";
 // @import "base/_lists";
 
 // Components
 
-// @import "components/_buttons";
+@import "components/_buttons";
 // @import "components/_navigation";
 // @import "components/_header";
 // @import "components/_main";
 // @import "components/_section";
 // @import "components/_footer";
-
-html {
-	height: 100%;
-}
-
-body {
-	margin: 0;
-	height: 100%;
-	color: var(--color-text);
-	background-color: var(--color-bg);
-	font-family: var(--font-default);
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-rendering: optimizeLegibility;
-	min-height: 10000px;
-	// overflow-y: scroll;
-	// overflow-x: hidden;
-}
-
-canvas {
-	position: fixed;
-	top: 0;
-	left: 0;
-}
-
-a {
-	text-decoration: none;
-	color: var(--color-link);
-	outline: none;
-}
-
-a:hover,
-a:focus {
-	color: var(--color-link-hover);
-	outline: none;
-}
-
-.content {
-	display: flex;
-	flex-direction: column;
-	width: 100vw;
-	height: 100vh;
-	justify-content: center;
-	position: relative;
-	align-items: center;
-}
-
-section.hero {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	position: relative;
-	z-index: 1;
-	will-change: opacity;
-	opacity: 0;
-}
-
-.hero__title {
-	font-size: 2rem;
-	text-transform: uppercase;
-	margin-bottom: 0px;
-	letter-spacing: 0.15rem;
-	background: linear-gradient(40deg, var(--color-primary) 0%, #ddd 50%, var(--color-primary) 100%);
-	background-size: cover;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
-	text-fill-color: transparent;
-	color: var(--color-primary);
-	font-weight: 100;
-}
-
-.hero__text {
-	font-size: 1.25rem;
-	color: #666;
-}
-
-section {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	position: fixed;
-	z-index: 1;
-	will-change: opacity;
-	opacity: 0;
-	top: 0;
-	line-height: 1.2;
-	font-size: 1.5rem;
-	text-align: center;
-	color: white;
-	max-width: calc(100% - 80px);
-	left: 50%;
-	transform: translateX(-50%);
-	padding: 0 40px;
-	height: 100vh;
-}
-
-@media screen and (min-width: 53em) {
-	.message {
-		display: none;
-	}
-	.hero__title {
-		font-size: 7vw;
-		letter-spacing: 0.5vw;
-	}
-	section {
-		line-height: 1.2;
-		font-size: 2.5vw;
-	}
-}
