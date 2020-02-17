@@ -18,36 +18,53 @@ canvas {
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: 99;
+	pointer-events: none;
 }
 
 .content {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
 	width: 100vw;
 	height: 100vh;
-	justify-content: center;
+
 	position: relative;
-	align-items: center;
 }
 
 section {
 	display: flex;
-	justify-content: center;
-	align-items: center;
 	flex-direction: column;
+	// justify-content: center;
+	// align-items: center;
+
 	position: fixed;
 	z-index: 1;
-	// will-change: opacity;
-	opacity: 0;
 	top: 0;
-	font-size: 1.5rem;
-	text-align: center;
-	color: white;
-	max-width: calc(100% - 80px);
 	left: 50%;
 	transform: translateX(-50%);
-	padding: 0 40px;
+
+	opacity: 0;
+	color: white;
+	max-width: calc(100% - 80px);
 	height: 100vh;
+	width: 100%;
+
+	// will-change: opacity;
+}
+
+section.right {
+	// justify-content: flex-end;
+	align-items: flex-end;
+	text-align: right;
+}
+
+section.center {
+	justify-content: center;
+	align-items: center;
+	text-align: center;
 }
 
 section.active {
@@ -56,21 +73,23 @@ section.active {
 }
 
 section.hero {
-	width: 100%;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	flex-direction: column;
+
 	position: relative;
+	width: 100%;
 	z-index: 1;
-	will-change: opacity;
 	opacity: 0;
+	
+	// will-change: opacity;
 }
 
 @media screen and (min-width: 53em) {
 
 	section {
-		font-size: 2.5vw;
+		// font-size: 2.5vw;
 	}
 
 }

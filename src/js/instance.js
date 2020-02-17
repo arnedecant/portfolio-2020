@@ -13,7 +13,7 @@ export default class Instance {
         this.multiplier = multiplier
         this.duration = duration
         this.points = points
-		this.rainbow = rainbow || url.searchParams.get('rainbow')
+		this.rainbow = rainbow || parseFloat(url.searchParams.get('rainbow'))
 
         this.uniforms = { 
 			time: { value: 0 },
