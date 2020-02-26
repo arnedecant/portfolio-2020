@@ -2,10 +2,16 @@
 // :: App
 // -------------------------------------------------------------------
 
-import Engine from './engine.js'
-import Instance from './instance.js'
-import { getArrayWithNoise } from './utilities/array.js'
-import { hcfp } from './utilities/three.js'
+import Proximity from './components/proximity'
+import Picture from './components/picture'
+
+import Engine from './engine'
+import Instance from './instance'
+import { getArrayWithNoise } from './utilities/array'
+import { capitalize } from './utilities/string'
+import { hcfp } from './utilities/three'
+
+const CLASSES = { Proximity, Picture }
 
 class App {
 
@@ -24,15 +30,22 @@ class App {
 
 		this.$sections = [...document.querySelectorAll('section:not(.hero)')]
 		this.$hero = document.querySelector('section.hero')
+		this.$components = [...document.querySelectorAll('[data-component]')]
 
 		// properties
 		
 		this.instances = []
+		this.components = {}
 
 		// events
 
 		window.addEventListener('resize', this.resize.bind(this), false)
+		window.addEventListener('mousemove', this.mousemove.bind(this))
 		document.body.addEventListener('click', this.click.bind(this))
+
+		// setup all components
+
+		this.$components.forEach(($component) => this.setupComponent($component))
 
 		// init
 
@@ -40,7 +53,7 @@ class App {
 
 	}
 
-	async getData() {
+	async fetch(path = 'assets/data.json') {
 
 		const data = await fetch('assets/data.json')
 		return await data.json()
@@ -49,16 +62,37 @@ class App {
 
 	async init() {
 		
-		this.data = await this.getData()
+		this.data = await this.fetch()
 
-		this.createInstances();
-		this.scrollUpdates();
+		this.createInstances()
+		this.scrollUpdates()
 
 		requestAnimationFrame(() => {
 			window.scrollTo(0, 0)
 			this.resize()
 			this.$hero.style.opacity = 1
 		})
+
+	}
+
+	setupComponent($component) {
+
+		// Dynamically create new component instances from data-attributes
+		// e.g. [data-component="my-component"]
+
+		let component = name = $component.dataset.component
+
+		// "my-component" => "MyComponent"
+
+		component = component.split('-')
+		component = component.map((c) => capitalize(c))
+		component = component.join('')
+
+		// add a new MyComponent($component) to the components object
+		// this.components['my-component'] to get the desired components array
+
+		if (!this.components[name]) this.components[name] = []
+		this.components[name].push(new CLASSES[component]($component))
 
 	}
 
@@ -138,6 +172,15 @@ class App {
 		// Render
 
 		this.render()
+
+	}
+
+	mousemove(e) {
+
+		if (!this.components['proximity']) return
+
+		this.components['proximity'].forEach((component) => component.mousemove(e))
+		this.components['proximity-button'].forEach((component) => component.mousemove(e))
 
 	}
 

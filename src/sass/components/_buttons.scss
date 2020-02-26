@@ -1,11 +1,50 @@
+a, button {
+	all: unset;
+	pointer-events: all;
+	cursor: pointer;
+	transition: all .2s ease;
+}
+
 a {
-	text-decoration: none;
 	color: var(--color-link);
-	outline: none;
 }
 
 a:hover,
 a:focus {
 	color: var(--color-link-hover);
-	outline: none;
+}
+
+.btn {
+	border: var(--color-primary) 3px solid;
+	display: inline-flex;
+	width: auto;
+	text-transform: uppercase;
+	font-weight: 300;
+	padding: 0.5em 0.75em;
+	background-color: transparent;
+	position: relative;
+	color: white;
+	// background-color: rgba(var(--color-primary--rgb), calc(1 - 1 / var(--distance)));
+}
+
+.btn:hover {
+	background-color: var(--color-primary);
+	color: var(--color-bg);
+}
+
+.btn:after {
+	font-weight: 300;
+	content: attr(data-after);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	color: var(--color-bg);
+	background-color: var(--color-primary);
+	opacity: var(--proximity, 0);
 }
