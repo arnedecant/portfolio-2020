@@ -16,7 +16,7 @@ export default class Proximity extends Component {
             y: this.rect.y + (this.rect.height / 2)
         }
 
-        this.radius = this.rect.width / 2
+        this.radius = (this.rect.width - this.rect.height) / 2
 
     }
 
@@ -29,7 +29,7 @@ export default class Proximity extends Component {
         const dx = e.clientX - this.center.x
         const dy = e.clientY - this.center.y
         this.distance = Math.sqrt(dx * dx + dy * dy)
-        this.proximity = this.radius / distance
+        this.proximity = this.radius / this.distance
 
         this.element.style.setProperty("--distance", this.distance)
         this.element.style.setProperty("--proximity", this.proximity)

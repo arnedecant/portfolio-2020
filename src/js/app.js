@@ -2,7 +2,7 @@
 // :: App
 // -------------------------------------------------------------------
 
-import Proximity from './components/proximity'
+import ProximityButton from './components/proximity-button'
 import Picture from './components/picture'
 
 import Engine from './engine'
@@ -11,7 +11,7 @@ import { getArrayWithNoise } from './utilities/array'
 import { capitalize } from './utilities/string'
 import { hcfp } from './utilities/three'
 
-const CLASSES = { Proximity, Picture }
+const CLASSES = { ProximityButton, Picture }
 
 class App {
 
@@ -55,7 +55,7 @@ class App {
 
 	async fetch(path = 'assets/data.json') {
 
-		const data = await fetch('assets/data.json')
+		const data = await fetch(path)
 		return await data.json()
 
 	}
@@ -66,6 +66,8 @@ class App {
 
 		this.createInstances()
 		this.scrollUpdates()
+
+		this.components['proximity-button'].forEach((c) => c.setInstance(this.instances[this.instances.length - 1]))
 
 		requestAnimationFrame(() => {
 			window.scrollTo(0, 0)
@@ -177,9 +179,7 @@ class App {
 
 	mousemove(e) {
 
-		if (!this.components['proximity']) return
-
-		this.components['proximity'].forEach((component) => component.mousemove(e))
+		if (!this.components['proximity-button']) return
 		this.components['proximity-button'].forEach((component) => component.mousemove(e))
 
 	}

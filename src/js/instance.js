@@ -4,7 +4,7 @@
 
 export default class Instance {
 
-	constructor({ geometry, material, multiplier, duration, points, rainbow = false }) {
+	constructor({ geometry, material, multiplier, duration, points, rainbow = false, engine = ENGINE }) {
 
 		const url = new URL(window.location.href)
 
@@ -14,6 +14,7 @@ export default class Instance {
         this.duration = duration
         this.points = points
 		this.rainbow = rainbow || parseFloat(url.searchParams.get('rainbow'))
+		this.engine = engine
 
         this.uniforms = { 
 			time: { value: 0 },
@@ -90,7 +91,7 @@ export default class Instance {
             fragment: this.fragment,
         })
 
-        ENGINE.scene.add(this.phenomenon.mesh)
+        this.engine.scene.add(this.phenomenon.mesh)
 		
 	}
 

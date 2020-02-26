@@ -14,6 +14,7 @@ export default class Engine {
 		
 		this.mouse = new THREE.Vector2()
 		this.raycaster = new THREE.Raycaster()
+		this.container = config.container || document.body
 
 		// init
 
@@ -46,11 +47,6 @@ export default class Engine {
 
 		this.$canvas = document.createElement('canvas')
 		this.ctx = this.$canvas.getContext('2d')
-
-		// set width & height
-
-		this.height = window.innerHeight
-		this.width = window.innerWidth
 
 		// create new scene
 
@@ -125,7 +121,7 @@ export default class Engine {
 
 		// set the size
 
-		this.renderer.setSize(this.width, this.height)
+		this.setSize()
 
 		// enable shadowMap
 
@@ -138,7 +134,7 @@ export default class Engine {
 		// append to DOM
 
 		// this.container = document.querySelector('#world')
-		document.body.appendChild(this.renderer.domElement)
+		this.container.appendChild(this.renderer.domElement)
 
 	}
 
@@ -242,6 +238,22 @@ export default class Engine {
 
 	}
 
+	setSize() {
+
+		this.width = this.container === document.body ? window.innerWidth : this.container.offsetWidth
+		this.height = this.container === document.body ? window.innerHeight : this.container.offsetHeight
+
+		if (this.config.size) {
+			this.width *= this.config.size
+			this.height *= this.config.size
+		}
+
+		// set renderer dimensions
+
+		this.renderer.setSize(this.width, this.height)
+
+	}
+
 	scroll(e) {
 
 		// only store the scroll value
@@ -287,12 +299,7 @@ export default class Engine {
 
 		// set canvas dimensions
 
-		this.width = window.innerWidth;
-		this.height = window.innerHeight;
-
-		// set renderer dimensions
-
-		this.renderer.setSize(this.width, this.height)
+		this.setSize()
 
 		// set camera
 

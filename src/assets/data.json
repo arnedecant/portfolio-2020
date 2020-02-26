@@ -68,6 +68,35 @@
                 [[0, 0, 30], 2],
                 [[0, 0, 0], 20]
 			]
+        },
+        {
+            "geometry": {
+                "type": "IcosahedronGeometry",
+                "parameters": [2, 0]
+            },
+            "material": {
+                "type": "MeshPhongMaterial",
+                "parameters": {
+                    "emissive": 0.45,
+				    "specular": "#efefef",
+				    "shininess": 10,
+				    "flatShading": true
+                }
+            },
+            "multiplier": 50,
+			"duration": 0.4,
+			"points_bak": [
+                [[-40, -2, -2], 5],
+                [[-10, 0, -1], 5],
+                [[10, 0, 1], 5],
+                [[20, 2, 2], 5]
+            ],
+            "points": [
+                [[-2, -2, -2], 5],
+                [[-3, 0, -1], 5],
+                [[3, 0, 1], 5],
+                [[2, 2, 2], 5]
+            ]
         }
     ]
 }

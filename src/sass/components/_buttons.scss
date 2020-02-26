@@ -27,14 +27,13 @@ a:focus {
 	// background-color: rgba(var(--color-primary--rgb), calc(1 - 1 / var(--distance)));
 }
 
-.btn:hover {
-	background-color: var(--color-primary);
-	color: var(--color-bg);
-}
+// .btn:hover {
+// 	background-color: var(--color-primary);
+// 	color: var(--color-bg);
+// }
 
 .btn:after {
-	font-weight: 300;
-	content: attr(data-after);
+	// content: attr(data-after);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -47,4 +46,16 @@ a:focus {
 	color: var(--color-bg);
 	background-color: var(--color-primary);
 	opacity: var(--proximity, 0);
+}
+
+[data-component="proximity-button"] {
+	position: relative;
+}
+
+[data-component="proximity-button"] > canvas {
+	position: absolute;
+	left: -50%;
+	top: -50%;
+	z-index: -1;
+	// background-color: red;
 }
