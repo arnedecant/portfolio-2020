@@ -3,7 +3,7 @@
 // -------------------------------------------------------------------
 
 import ProximityButton from './components/proximity-button'
-import Picture from './components/picture'
+import Image from './components/image'
 
 import Engine from './engine'
 import Instance from './instance'
@@ -11,7 +11,7 @@ import { getArrayWithNoise } from './utilities/array'
 import { capitalize } from './utilities/string'
 import { hcfp } from './utilities/three'
 
-const CLASSES = { ProximityButton, Picture }
+const CLASSES = { ProximityButton, Image }
 
 class App {
 
@@ -100,11 +100,36 @@ class App {
 
 	createInstances() {
 
+		const defaultInstance = this.data.instances.default
+
+		// loop all keys in the instances-object
+
 		for (const key in this.data.instances) {
 
-			const instances = this.data.instances[key]
+			// skip the default instance
 
-			for (const instance of instances) {
+			if (key === 'default') continue
+
+			// loop all values in the array (sections, buttons)
+
+			for (const instance of this.data.instances[key]) {
+
+				// if the amount of properties in this instance is less than
+				// the amount of properties in the default object, then it is
+				// certain it'll need to extend from the default object
+
+				if (Object.keys(defaultInstance).length > Object.keys(instance).length) {
+
+					// loop all keys in the default instance and if the key
+					// doesn't exist in the current instance, inherit them
+
+					for (const defaultKey in defaultInstance) {
+						if (!instance[defaultKey]) instance[defaultKey] = defaultInstance[defaultKey]
+					}
+
+				}
+
+				// convert raw data into actual geometries, materials, ...
 
 				const points = instance.points.map((point) => () => getArrayWithNoise(...point))
 				const props = {
@@ -116,7 +141,9 @@ class App {
 					}),
 					points: points
 				}
-				
+
+				// add the converted instance to this.instances
+
 				if (!this.instances[key]) this.instances[key] = []
 				this.instances[key].push(new Instance(props))
 

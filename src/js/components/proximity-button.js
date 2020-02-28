@@ -47,7 +47,7 @@ export default class ProximityButton extends Proximity {
 
         let proximity = clamp(this.proximity, 0, 1)
         let scale = proximity * 2
-        let time = Math.pow(proximity * 0.25, 0.25)
+        let time = Math.pow((proximity - 0.25) * 0.25, 0.5)
 
         this.instance.phenomenon.uniforms.time.value = time
         this.instance.phenomenon.mesh.scale.set(scale, scale, scale)

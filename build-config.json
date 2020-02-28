@@ -9,7 +9,7 @@
 		{
 			"id": "index",
 			"seo-title": "Arne Decant",
-			"seo-description": "",
+			"seo-description": "Hi, my name is Arne and I'm a front-end web developer from Belgium.",
 			"src-html": "index.html",
 			"src-sass": "main.scss",
 			"src-js": "app.js"

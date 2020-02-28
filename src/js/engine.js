@@ -265,7 +265,7 @@ export default class Engine {
 
 	click(e) {
 
-		e.preventDefault()
+		// e.preventDefault()
 
 	}
 
