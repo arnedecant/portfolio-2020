@@ -5,6 +5,11 @@ a, button {
 	transition: all .2s ease;
 }
 
+a span, button span,
+a canvas, button canvas {
+	pointer-events: none;
+}
+
 a {
 	color: var(--color-link);
 }
@@ -27,25 +32,11 @@ a:focus {
 	// background-color: rgba(var(--color-primary--rgb), calc(1 - 1 / var(--distance)));
 }
 
-// .btn:hover {
-// 	background-color: var(--color-primary);
-// 	color: var(--color-bg);
-// }
-
-.btn:after {
-	// content: attr(data-after);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: absolute;
-	left: 0;
-	top: 0;
-	z-index: 1;
-	width: 100%;
-	height: 100%;
+.btn:hover {
+	// background-color: rgba(var(--color-primary--rgb), 0.95);
+	background-color: rgba(255,255,255,0.9);
 	color: var(--color-bg);
-	background-color: var(--color-primary);
-	opacity: var(--proximity, 0);
+	border-color: rgba(255,255,255,0.9);
 }
 
 [data-component="proximity-button"] {
@@ -54,8 +45,8 @@ a:focus {
 
 [data-component="proximity-button"] > canvas {
 	position: absolute;
-	left: -50%;
-	top: -50%;
+	left: -100%;
+	top: -100%;
 	z-index: -1;
 	// background-color: red;
 }

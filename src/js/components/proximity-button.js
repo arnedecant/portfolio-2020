@@ -12,7 +12,7 @@ export default class ProximityButton extends Proximity {
 
         super(selector)
 
-        this.engine = new Engine({ container: this.element, size: 2 })
+        this.engine = new Engine({ container: this.element, size: 3 })
 
         this.render()
 
@@ -43,16 +43,13 @@ export default class ProximityButton extends Proximity {
 
         // set uniforms according to proximity
 
-        // console.log(this.proximity)
+        if (proximity <= 0) return
 
-        // let proximity = Math.sqrt(clamp(this.proximity, 0, 1)) - 0.25
         let proximity = clamp(this.proximity, 0, 1)
-
-        if (proximity < 0) return
-
         let scale = proximity * 2
+        let time = Math.pow(proximity * 0.25, 0.25)
 
-        this.instance.phenomenon.uniforms.time.value = proximity / 2
+        this.instance.phenomenon.uniforms.time.value = time
         this.instance.phenomenon.mesh.scale.set(scale, scale, scale)
 
 	}

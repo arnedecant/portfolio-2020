@@ -34,7 +34,7 @@ class App {
 
 		// properties
 		
-		this.instances = []
+		this.instances = {}
 		this.components = {}
 
 		// events
@@ -67,7 +67,7 @@ class App {
 		this.createInstances()
 		this.scrollUpdates()
 
-		this.components['proximity-button'].forEach((c) => c.setInstance(this.instances[this.instances.length - 1]))
+		this.components['proximity-button'].forEach((c, i) => c.setInstance(this.instances.buttons[i]))
 
 		requestAnimationFrame(() => {
 			window.scrollTo(0, 0)
@@ -100,21 +100,27 @@ class App {
 
 	createInstances() {
 
-		for (const instance of this.data.instances) {
+		for (const key in this.data.instances) {
 
-			const points = instance.points.map((point) => () => getArrayWithNoise(...point))
+			const instances = this.data.instances[key]
 
-			const props = {
-				...instance,
-				geometry: new THREE[instance.geometry.type](...instance.geometry.parameters),
-				material: new THREE[instance.material.type]({
-					...instance.material.parameters,
-					emissive: hcfp(instance.material.parameters.emissive)
-				}),
-				points: points
+			for (const instance of instances) {
+
+				const points = instance.points.map((point) => () => getArrayWithNoise(...point))
+				const props = {
+					...instance,
+					geometry: new THREE[instance.geometry.type](...instance.geometry.parameters),
+					material: new THREE[instance.material.type]({
+						...instance.material.parameters,
+						emissive: hcfp(instance.material.parameters.emissive)
+					}),
+					points: points
+				}
+				
+				if (!this.instances[key]) this.instances[key] = []
+				this.instances[key].push(new Instance(props))
+
 			}
-			
-			this.instances.push(new Instance(props))
 
 		}
 
@@ -125,16 +131,16 @@ class App {
 		uos(0, 0.05, p => this.$hero.style.opacity = 1 - p);
 		uos(0, 1, p => this.render());
 
-		const step = 1 / this.instances.length
+		const step = 1 / this.instances.sections.length
 
-		for (let i = 0; i < this.instances.length; i += 1) {
+		for (let i = 0; i < this.instances.sections.length; i += 1) {
 
 			const transitionBegin = i * step
 			const transitionEnd = transitionBegin + step * 0.5
 			const textEnd = (i + 1) * step
 			const $section = this.$sections[i]
 
-			uos(transitionBegin, transitionEnd, p => (this.instances[i].phenomenon.uniforms.time.value = p))
+			uos(transitionBegin, transitionEnd, p => (this.instances.sections[i].phenomenon.uniforms.time.value = p))
 
 			uos(transitionEnd, textEnd, p => {
 
@@ -186,7 +192,7 @@ class App {
 
 	click(e) {
 
-		
+		console.log('[click]', e)
 
 	}
 
