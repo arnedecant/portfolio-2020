@@ -2,6 +2,7 @@
 	"plugins": [
 		"transform-runtime",
 		"babel-plugin-transform-object-rest-spread",
-		"transform-custom-element-classes"
+		"transform-custom-element-classes",
+		"es6-promise"
 	]
 }

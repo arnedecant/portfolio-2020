@@ -43,10 +43,6 @@ class App {
 		window.addEventListener('mousemove', this.mousemove.bind(this))
 		document.body.addEventListener('click', this.click.bind(this))
 
-		// setup all components
-
-		this.$components.forEach(($component) => this.setupComponent($component))
-
 		// init
 
 		this.init()
@@ -61,13 +57,26 @@ class App {
 	}
 
 	async init() {
+
+		// get data
 		
 		this.data = await this.fetch()
 
+		// setup all components
+
+		// this.$components.forEach(($component, index) => this.setupComponent($component, index))
+		// this.components['proximity-button'].forEach((c, i) => c.setInstance(this.instances.buttons[i]))
+
+		new Promise((resolve, reject) => {
+			this.$components.forEach(($component, index) => this.setupComponent($component, index, { resolve, reject }))
+		}).then(() => {
+			this.components['proximity-button'].forEach((c, i) => c.setInstance(this.instances.buttons[i]))
+		})
+
+		// scroll stuff
+
 		this.createInstances()
 		this.scrollUpdates()
-
-		this.components['proximity-button'].forEach((c, i) => c.setInstance(this.instances.buttons[i]))
 
 		requestAnimationFrame(() => {
 			window.scrollTo(0, 0)
@@ -77,7 +86,7 @@ class App {
 
 	}
 
-	setupComponent($component) {
+	setupComponent($component, index, promise = {}) {
 
 		// Dynamically create new component instances from data-attributes
 		// e.g. [data-component="my-component"]
@@ -94,7 +103,11 @@ class App {
 		// this.components['my-component'] to get the desired components array
 
 		if (!this.components[name]) this.components[name] = []
-		this.components[name].push(new CLASSES[component]($component))
+		this.components[name].push(new CLASSES[component]($component, this.data.instances.default))
+
+		// resolve promise, if any
+
+		if (promise.resolve && index === this.$components.length - 1) promise.resolve()
 
 	}
 
@@ -167,7 +180,12 @@ class App {
 			const textEnd = (i + 1) * step
 			const $section = this.$sections[i]
 
-			uos(transitionBegin, transitionEnd, p => (this.instances.sections[i].phenomenon.uniforms.time.value = p))
+			uos(transitionBegin, transitionEnd, p => {
+
+				this.instances.sections[i].phenomenon.uniforms.time.value = p
+				// this.$sections.forEach(($s) => ($s != $section) && $s.classList.remove('active'))
+
+			})
 
 			uos(transitionEnd, textEnd, p => {
 
@@ -183,6 +201,8 @@ class App {
 				if (opacity > 0) {
 					this.$sections.forEach(($s) => ($s != $section) && $s.classList.remove('active'))
 					$section.classList.add('active')
+				} else {
+					// $section.classList.remove('active')
 				}
 
 			})
