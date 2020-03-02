@@ -20,7 +20,7 @@ class App {
 		// create new engine: setup scene, camera & lighting
 		// and load vertex and fragment shaders in memory
 
-		window.ENGINE = new Engine()
+		window.ENGINE = new Engine({ container: document.body })
 		window.SHADERS = {
 			vertex: document.querySelector('[data-shader="vertex"]').textContent,
 			fragment: document.querySelector('[data-shader="fragment"]').textContent

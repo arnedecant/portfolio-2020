@@ -49,17 +49,43 @@ export default class Image extends Component {
 
     init3D() {
 
-        const engine = new Engine({ container: this.element })
+        this.engine = new Engine({ container: this.element })
 
-        const geometry = new THREE[this.data.geometry.type](...this.data.geometry.parameters)
+        // get texture
+
+        const texture = new THREE.TextureLoader().load(this.src)
+
+        // setup mesh 
+
+        const geometry = new THREE[this.data.geometry.type](5, 0)
         const material = new THREE[this.data.material.type]({
             ...this.data.material.parameters,
-            emissive: hcfp(this.data.material.parameters.emissive)
+            emissive: hcfp(this.data.material.parameters.emissive),
+            // map: texture
         })
+        this.mesh = new THREE.Mesh(geometry, material)
 
-        const mesh = new THREE.Mesh(geometry, material)
+        // setup projector
 
-        engine.scene.add(mesh)
+        this.engine.spotLight.map = texture
+
+        // add to scene
+
+        this.engine.scene.add(this.mesh)
+        this.engine.resize()
+        this.render()
+
+    }
+
+    render() {
+
+        this.engine.render()
+
+        // this.mesh.rotation.x += 0.0025
+		this.mesh.rotation.y += 0.0025
+        this.mesh.rotation.z += 0.0025
+
+        window.requestAnimationFrame(this.render.bind(this))
 
     }
 

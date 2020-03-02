@@ -14,7 +14,11 @@ body {
 	min-height: 1200vh;
 }
 
-canvas {
+.cell > canvas {
+	
+}
+
+body > canvas {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -70,7 +74,8 @@ section > .cell:last-child {
 	flex: 0 0 40%;
 }
 
-section > .cell.img-group {
+section > .cell.img-group,
+section > .cell[data-component="image"] {
 	padding: 0;
 }
 

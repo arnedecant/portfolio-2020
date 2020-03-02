@@ -6,15 +6,16 @@
 
 export default class Engine {
 
-	constructor(config = {}) {
+	constructor({ container = document.body, size = 1, background = null, debug = false }) {
 
 		// set properties
 
-		this.config = config
+		this.config = { container, size, background, debug }
+		// this.config = arguments[0]
 		
 		this.mouse = new THREE.Vector2()
 		this.raycaster = new THREE.Raycaster()
-		this.container = config.container || document.body
+		this.container = container
 
 		// init
 
@@ -51,6 +52,10 @@ export default class Engine {
 		// create new scene
 
 		this.scene = window.SCENE = new THREE.Scene()
+
+		// set background color
+
+		if (this.config.background) this.scene.background = new THREE.Color(this.config.background)
 
 		// add fog to the scene
 
@@ -102,7 +107,7 @@ export default class Engine {
 			this.farPlane
 		)
 
-		this.camera.position.set(0, 20 * 1, 35 * 1)
+		this.camera.position.set(0, 20, 35)
 
 		// point the camera to the center
 
@@ -240,13 +245,15 @@ export default class Engine {
 
 	setSize() {
 
+		// set initial width and height
+
 		this.width = this.container === document.body ? window.innerWidth : this.container.offsetWidth
 		this.height = this.container === document.body ? window.innerHeight : this.container.offsetHeight
 
-		if (this.config.size) {
-			this.width *= this.config.size
-			this.height *= this.config.size
-		}
+		// update according to size multiplier
+
+		this.width *= this.config.size
+		this.height *= this.config.size
 
 		// set renderer dimensions
 
