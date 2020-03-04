@@ -54,6 +54,7 @@ section {
 	height: 100vh;
 	width: 100%;
 	overflow-y: auto;
+	overflow-x: hidden; // mostly for the canvasses
 	padding: 0 5vw;
 
 	// will-change: opacity;
@@ -62,16 +63,14 @@ section {
 section > .cell {
 	padding: 5vh 0;
 	height: 100%;
+	position: relative;
+	z-index: 1;
+	display: none;
 }
 
-section > .cell:first-child {
-	align-self: flex-start;
-	flex: 0 0 60%;
-}
-
-section > .cell:last-child {
-	align-self: flex-end;
-	flex: 0 0 40%;
+section:not(.align-right) > .cell:first-child,
+section.align-right > .cell:last-child {
+	display: block;
 }
 
 section > .cell.img-group,
@@ -80,17 +79,8 @@ section > .cell[data-component="image"] {
 }
 
 section.align-right {
-	// justify-content: flex-end;
 	align-items: flex-end;
 	text-align: right;
-}
-
-section.align-right > .cell:first-child {
-	flex: 0 0 40%;
-}
-
-section.align-right > .cell:last-child {
-	flex: 0 0 60%;
 }
 
 section.align-center,
@@ -116,7 +106,7 @@ section.hero {
 }
 
 section > p {
-	max-width: 60%;
+	max-width: 80%;
 }
 
 p {
@@ -125,6 +115,10 @@ p {
 
 p + p {
 	margin-top: 0;
+}
+
+p + .btn {
+	margin-top: 0.5rem;
 }
 
 .cell:first-child > p {
@@ -153,8 +147,41 @@ p + p {
 
 @media screen and (min-width: 53em) {
 
-	section {
-		// font-size: 2.5vw;
+	section > p {
+		max-width: 60%;
+	}
+
+	section > .cell {
+		display: block;
+	}
+
+	section > .cell.img-group {
+		display: flex;
+	}
+
+	section > .cell:first-child {
+		align-self: flex-start;
+		flex: 0 0 60%;
+		width: 60%;
+		z-index: 2;
+	}
+	
+	section > .cell:last-child {
+		align-self: flex-end;
+		flex: 0 0 40%;
+		width: 40%;
+	}
+
+	section.align-right > .cell:first-child {
+		flex: 0 0 40%;
+		width: 40%;
+		z-index: 1;
+	}
+	
+	section.align-right > .cell:last-child {
+		flex: 0 0 60%;
+		width: 60%;
+		z-index: 2;
 	}
 
 }

@@ -73,6 +73,8 @@ class App {
 			this.components['proximity-button'].forEach((c, i) => c.setInstance(this.instances.buttons[i]))
 		})
 
+		this.setupParagraphs()
+
 		// scroll stuff
 
 		this.createInstances()
@@ -83,6 +85,18 @@ class App {
 			this.resize()
 			this.$hero.style.opacity = 1
 		})
+
+	}
+
+	setupParagraphs() {
+
+		const $paragraphs = [...document.querySelectorAll('p[data-background="multiline"]')]
+
+		for (let $paragraph of $paragraphs) {
+
+			$paragraph.innerHTML = `<span class="multiline-wrapper">${ $paragraph.innerHTML }</span>`
+
+		}
 
 	}
 

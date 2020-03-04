@@ -5,3 +5,16 @@
 img {
     max-width: 100%;
 }
+
+picture img {
+    width: 100%;
+    height: auto;
+}
+
+[data-component="image"] {
+
+    &[data-mode="oversized"] {
+        width: 175%;
+    }
+
+}
