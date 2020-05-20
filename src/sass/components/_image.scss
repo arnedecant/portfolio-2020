@@ -2,13 +2,19 @@
     max-width: 50%;
 }
 
-img {
+img, svg {
     max-width: 100%;
 }
 
 picture img {
     width: 100%;
     height: auto;
+}
+
+svg {
+    max-width: 2rem;
+    max-height: 2rem;
+    margin: 0 0.5rem;
 }
 
 [data-component="image"] {

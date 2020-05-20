@@ -84,6 +84,7 @@ class App {
 			window.scrollTo(0, 0)
 			this.resize()
 			this.$hero.style.opacity = 1
+			this.$hero.classList.add('active')
 		})
 
 	}
@@ -182,8 +183,8 @@ class App {
 
 	scrollUpdates() {
 
-		uos(0, 0.05, p => this.$hero.style.opacity = 1 - p);
-		uos(0, 1, p => this.render());
+		uos(0, 0.05, p => this.$hero.style.opacity = 1 - p)
+		uos(0, 1, p => this.render())
 
 		const step = 1 / this.instances.sections.length
 
@@ -253,7 +254,7 @@ class App {
 
 	click(e) {
 
-		console.log('[click]', e)
+		// console.log('[click]', e)
 
 	}
 

@@ -14,10 +14,6 @@ body {
 	min-height: 1200vh;
 }
 
-.cell > canvas {
-	
-}
-
 body > canvas {
 	position: fixed;
 	top: 0;
@@ -94,7 +90,7 @@ section.align-center {
 	text-align: center;
 }
 
-section.active {
+section.active, section.hero.active {
 	z-index: 99;
 	pointer-events: all;
 }
@@ -143,6 +139,26 @@ p + .btn {
 
 .img-group.cell:first-child {
 	align-items: flex-end;
+}
+
+ul.flex {
+	display: flex;
+	margin: 0;
+	padding: 0;
+}
+
+ul.flex li {
+	list-style-type: none;
+}
+
+li a {
+	display: inline-block;
+}
+
+.social {
+	position: absolute;
+	bottom: 1rem;
+	right: 1rem;
 }
 
 @media screen and (min-width: 53em) {
